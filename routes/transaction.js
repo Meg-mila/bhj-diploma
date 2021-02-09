@@ -1,12 +1,13 @@
 const router = require("express").Router();
 const multer  = require('multer');
 const upload = multer();
+const uniqid = require('uniqid');
 
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync', {
     serialize: (data) => encrypt(JSON.stringify(data)),
     deserialize: (data) => JSON.parse(decrypt(data))
-  });
+});
 
 //запрос списка транзакций
 router.get("/", upload.none(), function(request, response) {
@@ -42,10 +43,11 @@ router.put("/", upload.none(), function(request, response) {
         response.json({ success: false, error:"Необходима авторизация" });
     else{// если авторизованный пользователь существует
         if (reg.test(sum)) {
-            let currentUserId = currentUser.user_id;// получить id текущего пользователя
+            let currentUserId = currentUser.id;// получить id текущего пользователя
             //добавление существующей транзакцию к списку и записывание в БД
             transactions.push({
-                type: type.toUpperCase(),
+                id: uniqid(),
+                type: type.toLowerCase(),
                 name,
                 sum: +sum,
                 account_id,

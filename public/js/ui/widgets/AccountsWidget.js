@@ -1,3 +1,4 @@
+'use strict'
 /**
  * Класс AccountsWidget управляет блоком
  * отображения счетов в боковой колонке
@@ -120,9 +121,10 @@ class AccountsWidget {
    * */
   getAccountHTML(item){
     return `
-      <li class="account" data-id="${ item.id }">
+      <li class="account" data-id="${item.id}">
           <a href="#">
-              ${ item.name } / ${ item.sum } ₽
+              <span>${item.name}</span> /
+              <span>${item.sum} ₽</span>
           </a>
       </li>
     `;
@@ -135,6 +137,7 @@ class AccountsWidget {
    * и добавляет его внутрь элемента виджета
    * */
   renderItem(data){
+    console.log('форма счетов');
     data.forEach(item => {
       const {name, id} = item,
           sum = item.sum.toLocaleString('en'),

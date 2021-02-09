@@ -1,3 +1,4 @@
+'use strict';
 /**
  * Класс App управляет всем приложением
  * */
@@ -116,7 +117,7 @@ class App {
    * App.getWidget( 'transactions' ); // извелекает App.widgets.transactions
    * */
   static getWidget(widgetName) {
-    return this.widgets[widgetName];
+   return this.widgets[widgetName];
   }
 
   /**
