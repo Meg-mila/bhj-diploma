@@ -4,6 +4,14 @@
  * на сервер.
  * */
 const createRequest = (options = {}) => {
+    const f = function () {},
+        {
+            method = 'GET',
+            callback = f,
+            responseType,
+            async = true,
+            data = {}
+        } = options;
     const xhr = new XMLHttpRequest();
     let formData = new FormData();
     xhr.withCredentials = true;
@@ -23,12 +31,12 @@ const createRequest = (options = {}) => {
         xhr.open(options.method, options.url);
         xhr.send(formData);
     } catch (e) {
-        options.callback(e, xhr.response);
+        options.callback(e);
     }
 
     xhr.addEventListener("readystatechange", () => {
         if (xhr.status === 200 && xhr.readyState === 4) {
-            options.callback(JSON.parse(xhr.response).success, JSON.parse(xhr.response));
+            options.callback(false, JSON.parse(xhr.response));
         }
     });
 };
